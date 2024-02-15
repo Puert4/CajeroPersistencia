@@ -9,14 +9,24 @@ public class ClienteNuevoDTO {
     private String nombres;
     private String apellido_paterno;
     private String apellido_materno;
+    private String fecha_nacimiento;
 
     ClienteNuevoDTO() {
     }
 
-    public ClienteNuevoDTO(String nombres, String apellido_paterno, String apellido_materno) {
+    public ClienteNuevoDTO(String nombres, String apellido_paterno, String apellido_materno,String fecha_nacimiento) {
         this.nombres = nombres;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
+        this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
+    }
+
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public String getNombres() {
