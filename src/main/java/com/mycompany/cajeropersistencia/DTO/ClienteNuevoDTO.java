@@ -42,6 +42,5 @@ public class ClienteNuevoDTO {
     public void setApellido_materno(String apellido_materno) {
         this.apellido_materno = apellido_materno;
     }
-    
-    
+
 }

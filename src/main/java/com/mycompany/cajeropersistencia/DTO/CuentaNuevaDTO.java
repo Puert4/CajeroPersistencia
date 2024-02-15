@@ -42,6 +42,5 @@ public class CuentaNuevaDTO {
     public void setFecha_apertura(String fecha_apertura) {
         this.fecha_apertura = fecha_apertura;
     }
-    
-    
+
 }
