@@ -29,7 +29,7 @@ public class ClientesDAO implements IClientesDAO {
     @Override
     public Cliente agregar(ClienteNuevoDTO clienteNuevo) throws PersistenciaException {
         //Hacer un SP Aqui
-        //o transaction
+        //o transactiondasdasdasdasdasdasdasdasdasdasda
         String sentenciaSQL = """
             INSERT INTO socios(nombres,apellido_paterno,apellido_materno, fecha_nacimiento)
             VALUES (?, ?, ?,?);""";
