@@ -8,6 +8,7 @@ import com.mycompany.cajeropersistencia.exceptions.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,30 +28,28 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public Usuario agregaUsuario(UsuarioNuevoDTO usuarioNuevo) throws PersistenciaException {
-        String sentenciaSQL = "INSERT INTO Usuario (email,passcode) VALUES(?,?)";
-        try {
+        String sentenciaSQL = """
+            INSERT INTO Usuarios(email, passcode)
+            VALUES (?, ?);""";
+        try (
+                Connection conexion = this.conexionBD.obtenerConexion(); PreparedStatement comando = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS);) {
+            comando.setString(1, usuarioNuevo.getEmail());
+            comando.setString(2, usuarioNuevo.getPasscode_usuario());
 
-            Connection conexion = conexionBD.obtenerConexion();
-            PreparedStatement statement = conexion.prepareStatement(sentenciaSQL);
-            statement.setString(1, usuarioNuevo.getEmail());
-            statement.setString(2, usuarioNuevo.getPasscode());
+            int numeroRegistrosInsertados = comando.executeUpdate();
+
+            logger.log(Level.INFO, "Se agregaro {0} usuario", numeroRegistrosInsertados);
+            ResultSet idsGenerados = comando.getGeneratedKeys();
+            idsGenerados.next();
+
+            Usuario usuario = new Usuario(idsGenerados.getInt(1), usuarioNuevo.getPasscode_usuario(), usuarioNuevo.getEmail());
+            return usuario;
 
         } catch (SQLException e) {
 
-            logger.log(Level.SEVERE, "Error al ejecutar la consulta SQL", e);
-            throw new PersistenciaException("Error al ejecutar la consulta SQL", e);
-        } finally {
-
-            if (conexion != null) {
-                try {
-                    conexion.close();
-                } catch (SQLException e) {
-                    logger.log(Level.SEVERE, "Error al cerrar la conexión a la base de datos", e);
-                }
-            }
-
-        }
-        return null;
+            logger.log(Level.SEVERE, "No se pudo guardar el usuario", e);
+            throw new PersistenciaException("No se pudo guardar el usuario", e);
+        } 
 
     }
 
