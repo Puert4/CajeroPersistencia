@@ -4,10 +4,15 @@
  */
 package com.mycompany.cajeropersistencia.DAOS;
 
+import com.mycompany.cajeroentidades.DomicilioCliente;
+import com.mycompany.cajeropersistencia.DTO.DomicilioNuevoDTO;
+import com.mycompany.cajeropersistencia.exceptions.PersistenciaException;
+
 /**
  *
  * @author TeLesheo
  */
 public interface IDomicilioDAO {
-
+    DomicilioCliente agregar(DomicilioNuevoDTO DomicilioNuevo)throws PersistenciaException;
+    DomicilioCliente actualizar_domicilio(DomicilioNuevoDTO DomicilioNuevo) throws PersistenciaException;
 }

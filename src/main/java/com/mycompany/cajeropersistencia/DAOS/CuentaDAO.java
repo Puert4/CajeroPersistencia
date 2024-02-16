@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.cajeropersistencia.DAOS;
 
 import com.mycompany.cajeroentidades.Cuenta;
@@ -52,9 +48,9 @@ public class CuentaDAO implements ICuentaDAO {
             idsGenerados.next();
             Cuenta cuenta = new Cuenta(idsGenerados.getInt(1), cuentaNuevaDTO.getSaldo_mxn(), cuentaNuevaDTO.getEstado_cuenta(), cuentaNuevaDTO.getFecha_apertura());
             return cuenta;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "No se pudo guardar la cuenta", ex);
-            throw new PersistenciaException("No se pudo guardar la cuenta", ex);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "No se pudo guardar la cuenta", e);
+            throw new PersistenciaException("No se pudo guardar la cuenta", e);
         }
     }
 
