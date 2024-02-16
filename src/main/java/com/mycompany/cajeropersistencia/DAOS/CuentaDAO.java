@@ -6,7 +6,8 @@ package com.mycompany.cajeropersistencia.DAOS;
 
 /**
  *
- * @author TeLesheo ola ola ola
+ * @author TeLesheo
+ * Asiellllll
  */
 public class CuentaDAO {
 
