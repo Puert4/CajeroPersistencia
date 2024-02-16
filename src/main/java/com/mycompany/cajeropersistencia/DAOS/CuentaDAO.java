@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author TeLesheo Asiellllll
+ * @author TeLesheo 
  */
 public class CuentaDAO implements ICuentaDAO {
 
