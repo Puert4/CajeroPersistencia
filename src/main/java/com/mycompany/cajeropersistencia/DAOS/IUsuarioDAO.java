@@ -4,10 +4,14 @@
  */
 package com.mycompany.cajeropersistencia.DAOS;
 
+import com.mycompany.cajeroentidades.Usuario;
+import com.mycompany.cajeropersistencia.DTO.UsuarioNuevoDTO;
+import com.mycompany.cajeropersistencia.exceptions.PersistenciaException;
+
 /**
  *
  * @author TeLesheo
  */
 public interface IUsuarioDAO {
-
+     public Usuario agregaUsuario(UsuarioNuevoDTO usuarioNuevo) throws PersistenciaException;
 }
