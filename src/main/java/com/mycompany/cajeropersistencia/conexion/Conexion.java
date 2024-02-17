@@ -12,8 +12,8 @@ import java.util.logging.Logger;
  */
 public class Conexion implements IConexion {
     
-    final String server = "localhost";
-    final String cadenaConexion = "banco";
+   
+    final String cadenaConexion = "jdbc:mysql://localhost/banco";
     final String usuario = "root";
     final String password = "puerta";
     static final Logger logger = Logger.getLogger(Conexion.class.getName());

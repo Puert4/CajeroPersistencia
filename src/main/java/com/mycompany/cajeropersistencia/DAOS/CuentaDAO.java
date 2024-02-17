@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author TeLesheo 
+ * @author TeLesheo
  */
 public class CuentaDAO implements ICuentaDAO {
 
@@ -29,10 +29,6 @@ public class CuentaDAO implements ICuentaDAO {
 
     @Override
     public Cuenta agregar(CuentaNuevaDTO cuentaNuevaDTO) throws PersistenciaException, ValidacionDTOException {
-        if (cuentaNuevaDTO == null || cuentaNuevaDTO.getSaldo_mxn() < 0) {
-            throw new ValidacionDTOException("La cuenta no puede ser nula y el saldo no puede ser negativo.");
-        }
-
         String sentenciaSQL = """
             INSERT INTO cuentas(saldo_mxn, estado_cuenta, fecha_apertura)
             VALUES (?, ?, ?);""";
@@ -56,10 +52,6 @@ public class CuentaDAO implements ICuentaDAO {
 
     @Override
     public void cancelar(int idCuenta) throws PersistenciaException, ValidacionDTOException {
-        if (idCuenta <= 0) {
-            throw new ValidacionDTOException("El ID de la cuenta debe ser un número positivo.");
-        }
-
         String sentenciaSQL = "DELETE FROM cuentas WHERE id_cuenta = ?";
         try (Connection conexion = this.conexionBD.obtenerConexion(); PreparedStatement comando = conexion.prepareStatement(sentenciaSQL)) {
             comando.setInt(1, idCuenta);

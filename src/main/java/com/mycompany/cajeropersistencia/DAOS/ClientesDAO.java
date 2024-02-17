@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ClientesDAO implements IClientesDAO {
 
-    final IConexion conexionBD;
+   IConexion conexionBD;
     static final Logger logger = Logger.getLogger(Conexion.class.getName());
 
     public ClientesDAO(IConexion conexion) {

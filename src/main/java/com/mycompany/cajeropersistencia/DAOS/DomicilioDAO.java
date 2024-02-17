@@ -4,12 +4,17 @@
  */
 package com.mycompany.cajeropersistencia.DAOS;
 
+import com.mycompany.cajeroentidades.Cuenta;
 import com.mycompany.cajeroentidades.DomicilioCliente;
 import static com.mycompany.cajeropersistencia.DAOS.CuentaDAO.logger;
 import com.mycompany.cajeropersistencia.DTO.DomicilioNuevoDTO;
 import com.mycompany.cajeropersistencia.conexion.Conexion;
 import com.mycompany.cajeropersistencia.conexion.IConexion;
 import com.mycompany.cajeropersistencia.exceptions.PersistenciaException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,20 +32,32 @@ public class DomicilioDAO implements IDomicilioDAO {
     }
 
     @Override
-    public DomicilioCliente agregar(DomicilioNuevoDTO DomicilioNuevo) throws PersistenciaException {
+    public DomicilioCliente agregar(DomicilioNuevoDTO domicilioNuevoDTO) throws PersistenciaException {
         String sentenciaSQL = """
-                INSERT INTO domiciliosclientes(codigo_postal,calle,numero_exterior,numero_interno) 
+                INSERT INTO domiciliosclientes(codigo_postal,calle,numero_exterior,numero_interno,id_cliente) 
                 VALUES (?,?,?,?,?);              
                               """;
 
-        try (Connection conexion = this.conexionBD,.obtenerConexion(); 
-                ) {
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "No se pudo guardar domicilio", e);
-            throw new PersistenciaException("No se pudo guardar el domicilio", e);
-        }
+        try (Connection conexion = this.conexionBD.obtenerConexion(); PreparedStatement comando = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS);) {
+            comando.setInt(1, domicilioNuevoDTO.getCodigo_postal());
+            comando.setString(2, domicilioNuevoDTO.getCalle());
+            comando.setInt(2, domicilioNuevoDTO.getNumero_exterior());
+            comando.setInt(3, domicilioNuevoDTO.getNumero_interior());
+            comando.setInt(4, domicilioNuevoDTO.getId_cliente());
 
-        return null;
+            int numeroRegistrosInsertados = comando.executeUpdate();
+
+            logger.log(Level.INFO, "Se agregó {0} cuenta", numeroRegistrosInsertados);
+            ResultSet idsGenerados = comando.getGeneratedKeys();
+            idsGenerados.next();
+            DomicilioCliente domicilioCliente = new DomicilioCliente
+        (idsGenerados.getInt(1),domicilioNuevoDTO.getCalle(),domicilioNuevoDTO.getNumero_interior(),
+                domicilioNuevoDTO.getNumero_exterior(),domicilioNuevoDTO.getId_cliente(),domicilioNuevoDTO.getCodigo_postal());
+            return domicilioCliente;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "No se pudo guardar la cuenta", e);
+            throw new PersistenciaException("No se pudo guardar la cuenta", e);
+        }
 
     }
 
