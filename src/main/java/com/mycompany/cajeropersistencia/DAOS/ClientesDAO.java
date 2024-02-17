@@ -27,9 +27,9 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public Cliente agregar(ClienteNuevoDTO clienteNuevo) throws PersistenciaException {
+    public Cliente agregar_cliente(ClienteNuevoDTO clienteNuevo) throws PersistenciaException {
         //Hacer un SP Aqui
-        //o transactiondasdasdasdasdasdasdasdasdasdasda
+
         String sentenciaSQL = """
             INSERT INTO socios(nombres,apellido_paterno,apellido_materno, fecha_nacimiento)
             VALUES (?, ?, ?,?);""";
@@ -41,12 +41,17 @@ public class ClientesDAO implements IClientesDAO {
             comando.setString(4, clienteNuevo.getFecha_nacimiento());
 
             int numeroRegistrosInsertados = comando.executeUpdate();
-
             logger.log(Level.INFO, "Se agregaro {0} cliente", numeroRegistrosInsertados);
+
             ResultSet idsGenerados = comando.getGeneratedKeys();
             idsGenerados.next();
-            Cliente cliente = new Cliente(idsGenerados.getInt(1), clienteNuevo.getNombres(), clienteNuevo.getApellido_paterno(), clienteNuevo.getApellido_materno(), clienteNuevo.getFecha_nacimiento());
+
+            Cliente cliente = new Cliente(idsGenerados.getInt(1), clienteNuevo.getNombres(),
+                    clienteNuevo.getApellido_paterno(), clienteNuevo.getApellido_materno(),
+                    clienteNuevo.getFecha_nacimiento());
+
             return cliente;
+
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "No se pudo guardar el cliente", ex);
             throw new PersistenciaException("No se pudo guardar el cliente", ex);
@@ -74,6 +79,7 @@ public class ClientesDAO implements IClientesDAO {
             idsGenerados.next();
             Cliente cliente = new Cliente(idsGenerados.getInt(1), clienteNuevo.getNombres(), clienteNuevo.getApellido_paterno(), clienteNuevo.getApellido_materno(), clienteNuevo.getFecha_nacimiento());
             return cliente;
+
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "No se pudo guardar el cliente", ex);
             throw new PersistenciaException("No se pudo guardar el cliente", ex);

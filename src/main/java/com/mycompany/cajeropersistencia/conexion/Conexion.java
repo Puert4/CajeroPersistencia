@@ -11,17 +11,13 @@ import java.util.logging.Logger;
  * @author TeLesheo
  */
 public class Conexion implements IConexion {
-
-    final String cadenaConexion;
-    final String usuario;
-    final String password;
+    
+    final String server = "localhost";
+    final String cadenaConexion = "banco";
+    final String usuario = "root";
+    final String password = "puerta";
     static final Logger logger = Logger.getLogger(Conexion.class.getName());
 
-    public Conexion(String cadenaConexion, String usuario, String password) {
-        this.cadenaConexion = cadenaConexion;
-        this.usuario = usuario;
-        this.password = password;
-    }
 
     @Override
     public Connection obtenerConexion() throws SQLException {

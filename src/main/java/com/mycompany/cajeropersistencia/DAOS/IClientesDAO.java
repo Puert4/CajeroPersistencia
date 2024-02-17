@@ -14,7 +14,7 @@ import com.mycompany.cajeropersistencia.exceptions.PersistenciaException;
  * @author TeLesheo
  */
 public interface IClientesDAO {
-       Cliente agregar(ClienteNuevoDTO clienteNuevo) throws PersistenciaException;
+       Cliente agregar_cliente(ClienteNuevoDTO clienteNuevo) throws PersistenciaException;
 //    List<Cliente> consultar() throws PersistenciaException;
        Cliente actualualizar_datos(ClienteNuevoDTO clienteNuevo) throws PersistenciaException;
 }
