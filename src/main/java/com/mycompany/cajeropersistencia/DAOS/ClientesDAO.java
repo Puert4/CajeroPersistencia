@@ -27,11 +27,11 @@ public class ClientesDAO implements IClientesDAO {
     }
 
     @Override
-    public Cliente agregar_cliente(ClienteNuevoDTO clienteNuevo) throws PersistenciaException {
+    public Cliente agregar_cliente(ClienteNuevoDTO clienteNuevo,int id_usuario) throws PersistenciaException {
         //Hacer un SP Aqui
 
         String sentenciaSQL = """
-            INSERT INTO socios(nombres,apellido_paterno,apellido_materno, fecha_nacimiento)
+            INSERT INTO clientes(nombres,apellido_paterno,apellido_materno, fecha_nacimiento)
             VALUES (?, ?, ?,?);""";
         try (
                 Connection conexion = this.conexionBD.obtenerConexion(); PreparedStatement comando = conexion.prepareStatement(sentenciaSQL, Statement.RETURN_GENERATED_KEYS);) {
