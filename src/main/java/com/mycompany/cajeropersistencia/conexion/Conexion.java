@@ -15,7 +15,8 @@ public class Conexion implements IConexion {
    
     final String cadenaConexion = "jdbc:mysql://localhost/banco";
     final String usuario = "root";
-    final String password = "puerta";
+    //final String password = "julian";
+    final String password = "3Tristestigres";
     static final Logger logger = Logger.getLogger(Conexion.class.getName());
 
 
